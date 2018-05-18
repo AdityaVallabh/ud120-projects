@@ -31,14 +31,49 @@ plt.show()
 ### your code here!  name your classifier object clf if you want the 
 ### visualization code (prettyPicture) to show you the decision boundary
 
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
+from time import time
 
+clfs = [
+    GaussianNB(), 
+    SVC(kernel='rbf', C=1000000), 
+    DecisionTreeClassifier(), 
+    KNeighborsClassifier(n_neighbors=8), 
+    RandomForestClassifier(), 
+    AdaBoostClassifier()
+]
 
+accuracies = {}
 
+for clf in clfs:
+    name = clf.__class__.__name__
+    print(name)
+    
+    t0 = time()
+    clf = clf.fit(features_train, labels_train)
+    print("Training Time:" + str(round(time()-t0, 3)) + "s")
 
+    t0 = time()
+    pred = clf.predict(features_test)
+    print("Predicting Time:" + str(round(time()-t0, 3)) + "s")
 
+    accuracy = accuracy_score(labels_test, pred)
+    print('Accuracy: ' + str(accuracy) + '\n')
 
+    accuracies[clf] = accuracy
 
-try:
-    prettyPicture(clf, features_test, labels_test)
-except NameError:
-    pass
+    try:
+        prettyPicture(clf, features_test, labels_test, name)
+    except NameError:
+        pass
+
+best_classifier = max(accuracies, key=accuracies.get)
+best_accuracy = accuracies[best_classifier]
+
+print('Best Classifier: ' + repr(best_classifier))
+print('Best Accuracy: ' + repr(best_accuracy))

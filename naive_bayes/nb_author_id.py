@@ -42,6 +42,12 @@ print("Predicting Time:" + str(round(time()-t0, 3)) + "s")
 accuracy = accuracy_score(labels_test, pred)
 print('Accuracy: ' + str(accuracy))
 
+"""
+Training Time:0.962s
+Predicting Time:0.117s
+Accuracy: 0.9732650739476678
+"""
+
 #########################################################
 
 

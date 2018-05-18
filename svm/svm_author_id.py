@@ -43,6 +43,14 @@ print("Predicting Time:" + str(round(time()-t0, 3)) + "s")
 accuracy = accuracy_score(labels_test, pred)
 print('Accuracy: ' + str(accuracy))
 
+"""
+Parameters: kernel='rbf', C=10000
+Output:
+Training Time:148.413s
+Predicting Time:15.128s
+Accuracy: 0.9908987485779295
+"""
+
 #########################################################
 
 
