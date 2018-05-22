@@ -39,5 +39,21 @@ labels_train   = labels_train[:150]
 
 ### your code goes here
 
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
 
+clf = DecisionTreeClassifier()
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+accuracy = accuracy_score(labels_test, pred)
 
+print('Number of training points: ' + str(len(features_train)))
+print('Accuracy: ' + str(accuracy))
+importances = list(clf.feature_importances_)
+
+important_features = [(i, imp) for i, imp in enumerate(importances) if imp]
+important_features.sort(key=lambda x: x[1], reverse=True)
+print('Important features: ' + str(important_features))
+most_important = important_features[0]
+
+print('Most important feature: ' + vectorizer.get_feature_names()[most_important[0]])
