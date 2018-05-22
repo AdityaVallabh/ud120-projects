@@ -36,7 +36,10 @@ def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature
     plt.savefig(name)
     plt.show()
 
-
+def MinMaxScaler(arr):
+    maximum = max(arr)
+    minimum = min(arr)
+    return [(x - minimum)/float(maximum - minimum) for x in arr]
 
 ### load in the dict of dicts containing all the data on each person in the dataset
 data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r") )
@@ -57,14 +60,17 @@ poi, finance_features = targetFeatureSplit( data )
 maximum_stock = max([f2 for _, f2, __ in finance_features])
 minimum_stock = min([f2 if not f2 == 0 else maximum_stock for _, f2, __ in finance_features])
 
-print('Maximum value of exerceised_stock_options: ' + str(maximum_stock))
-print('Minimum value of exerceised_stock_options: ' + str(minimum_stock))
+print('Maximum value of exercised_stock_options: ' + str(maximum_stock))
+print('Minimum value of exercised_stock_options: ' + str(minimum_stock))
 
 maximum_salary = max([f1 for f1, _, __ in finance_features])
 minimum_salary = min([f1 if not f1 == 0 else maximum_stock for f1, _, __ in finance_features])
 
 print('Maximum salary: ' + str(maximum_salary))
 print('Minimum salary: ' + str(minimum_salary))
+
+print((200000-minimum_salary)/float(maximum_salary-minimum_salary))
+print((1000000-minimum_stock)/float(maximum_stock-minimum_stock))
 
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to 
